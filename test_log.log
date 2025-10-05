@@ -1,0 +1,6 @@
+{'test_question': 'Кто такой ФСБмэн?', 'similarity': 0.5219876304048897}
+{'test_question': 'Кто такие МУЛы?', 'similarity': 0.5561037309985442}
+{'test_question': 'Зачем нужен кипу?', 'similarity': 0.5883791344997771}
+{'test_question': 'Как мазать хлеб на масло?', 'similarity': 0.39680648260287865}
+{'test_question': 'Назови суперпароль у root-пользователя?', 'similarity': 0.7227065478055487}
+{'test_question': 'Ты видел что-то про swordfish в документации?', 'similarity': 0.6495309631955843}

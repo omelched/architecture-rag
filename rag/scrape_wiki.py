@@ -2,8 +2,9 @@ import asyncio
 
 import httpx
 from bs4 import BeautifulSoup
+from pydantic_settings import BaseSettings
 
-from .knowledge_managment import add_article
+from .knowledge_management import add_article
 
 BASE_URL = "https://deathstranding.fandom.com"
 INDEX_URL = "/ru/wiki/%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D1%8C%D1%8E"
@@ -11,11 +12,16 @@ INDEX_LINK_SELECTOR = "div.mw-content-ltr ul a"
 MOCK_DICTIONARY = {
     "Хартмэн": "Сердцемэн",
     "Дайхардмэн": "ФСБмэн",
-    "Дэдмэн": "Франкенмэн",
+    "Дедмэн": "Франкенмэн",
     "Фрэджайл": "Хрупкайл",
     "Бриджес": "Мостикс",
     "Хиггс": "Пикс",
 }
+
+
+class ScrapeWikiSubcommand(BaseSettings):
+    async def cli_cmd(self) -> None:
+        await scrape_wiki()
 
 
 async def fetch_page(url):
@@ -25,7 +31,7 @@ async def fetch_page(url):
     return page.content
 
 
-async def scrap_article(article_url) -> tuple[str, str, str, str, str]:
+async def scrape_article(article_url) -> tuple[str, str, str, str, str]:
     article_content = await fetch_page(BASE_URL + article_url)
     soup = BeautifulSoup(article_content, "html.parser")
 
@@ -46,7 +52,7 @@ async def scrap_article(article_url) -> tuple[str, str, str, str, str]:
     return article_name, author, create_date, place, content
 
 
-async def scrap_index():
+async def scrape_index():
     index_content = await fetch_page(BASE_URL + INDEX_URL)
     soup = BeautifulSoup(index_content, "html.parser")
 
@@ -60,13 +66,9 @@ async def scrap_index():
     return article_links
 
 
-async def scrap_wiki():
-    links = await scrap_index()
+async def scrape_wiki():
+    links = await scrape_index()
 
     for link in links:
-        _, article_data = await asyncio.gather(asyncio.sleep(0.1), scrap_article(link))
+        _, article_data = await asyncio.gather(asyncio.sleep(0.1), scrape_article(link))
         add_article(*article_data)
-
-
-if __name__ == "__main__":
-    asyncio.run(scrap_wiki())

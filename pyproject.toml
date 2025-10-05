@@ -1,11 +1,11 @@
 [build-system]
-requires = ["setuptools==80.9.0"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "architecture-rag"
 version = "0.1.0"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 dependencies = [
     "langchain",
     "beautifulsoup4",
@@ -13,13 +13,15 @@ dependencies = [
     "langchain-huggingface",
     "langchain-chroma",
     "langchain-community",
+    "yandexcloud",
     "langchain-text-splitters",
     "sentence-transformers",
+    "python-telegram-bot",
     "numpy<2",
 ]
 
 [project.optional-dependencies]
-build = ["build==1.3.0"]
+build = ["build"]
 
 [tool.setuptools.packages.find]
 include = ["rag*"]

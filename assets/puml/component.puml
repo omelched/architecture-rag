@@ -1,0 +1,17 @@
+@startuml Basic Sample
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Component_Ext(scheduler, "Scheduler")
+Component(scraper, "Scraper")
+Component_Ext(wiki, "Wiki")
+Component(chunker, "Chunker")
+Component(embedder, "Embedder")
+ComponentDb(chromaDB, "ChromaDB")
+
+Rel(scheduler, scraper, "Триггерит реиндексацию")
+Rel(scraper, wiki, "Запрашивает веб-страницы со статьями")
+Rel(scraper, chunker, "Разбивает статьи на чанки")
+Rel(chunker, embedder, "Генерирует векторы")
+Rel(embedder, chromaDB, "Сохраняет векторы в БД")
+
+@enduml
